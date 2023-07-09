@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      - DB_USER=bestwallet
+      - DB_PASSWORD=bestwallet
+      - DB_NAME=bestwallet
+      - DB_HOST=db
+
+  db:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: bestwallet
+      POSTGRES_PASSWORD: bestwallet
+      POSTGRES_DB: bestwallet
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
